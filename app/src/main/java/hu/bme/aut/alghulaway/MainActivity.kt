@@ -7,10 +7,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import hu.bme.aut.alghulaway.databinding.ActivityMainBinding
 import hu.bme.aut.alghulaway.db.Drink
 import hu.bme.aut.alghulaway.db.DrinkDatabase
+import hu.bme.aut.alghulaway.fragments.AddEditDrinkDialogFragment
 import hu.bme.aut.alghulaway.listadapter.DrinkAdapter
 import kotlin.concurrent.thread
 
-class MainActivity : AppCompatActivity(), DrinkAdapter.DrinkClickListener {
+class MainActivity : AppCompatActivity(), DrinkAdapter.DrinkClickListener,
+                        AddEditDrinkDialogFragment.AddEditDrinkDialogListener {
+
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var database: DrinkDatabase
@@ -26,7 +29,10 @@ class MainActivity : AppCompatActivity(), DrinkAdapter.DrinkClickListener {
         database = DrinkDatabase.getDatabase(applicationContext)
 
         binding.fab.setOnClickListener{
-            //TODO
+            AddEditDrinkDialogFragment().show(
+                supportFragmentManager,
+                AddEditDrinkDialogFragment.TAG
+            )
         }
 
         initRecyclerView()
@@ -52,6 +58,14 @@ class MainActivity : AppCompatActivity(), DrinkAdapter.DrinkClickListener {
         thread {
             database.drinkDao().update(drink)
             // Log.d("MainActivity", "Drink update was successful")
+        }
+    }
+
+    override fun onDrinkModified(newDrink: Drink) {
+        thread {
+            val insertId = database.drinkDao().insert(newDrink)
+            newDrink.id = insertId
+            runOnUiThread { adapter.addDrink(newDrink) }
         }
     }
 }
