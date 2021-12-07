@@ -3,6 +3,7 @@ package hu.bme.aut.alghulaway
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import hu.bme.aut.alghulaway.databinding.ActivityMainBinding
 import hu.bme.aut.alghulaway.db.Drink
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity(), DrinkAdapter.DrinkClickListener,
 
     private fun initRecyclerView(){
         adapter = DrinkAdapter(this)
-        binding.rvMain.layoutManager = LinearLayoutManager(this)
+        binding.rvMain.layoutManager = GridLayoutManager(this, 3)
         binding.rvMain.adapter = adapter
         loadItemsInBackground()
     }

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">AlGhulAway</string>
-    <string name="unitAmount">ml</string>
+    <string name="unitAmount">dl</string>
     <string name="unitAbv">%</string>
     <string name="unitCalories">kcal</string>
     <string name="unitPrice">Ft</string>

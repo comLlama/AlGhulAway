@@ -16,5 +16,11 @@ interface DrinkDao {
     @Query("SELECT * FROM drinks")
     fun getAll(): List<Drink>
 
+    @Query("SELECT SUM(abv*amount) FROM drinks")
+    fun getAlcoholAmount(): Double?
+
+    @Query("SELECT SUM(price) FROM drinks")
+    fun getPriceSum(): Int?
+
     //TODO: other queries if needed
 }
