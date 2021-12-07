@@ -49,6 +49,12 @@ class DrinkAdapter(private val listener: DrinkClickListener) :
         notifyItemInserted( drinks.size - 1)
     }
 
+    fun removeDrink(drink: Drink) {
+        var idx = drinks.indexOf(drink)
+        drinks.remove(drink)
+        notifyItemRemoved(idx)
+    }
+
     fun update(updDrinks: List<Drink>){
         drinks.clear()
         drinks.addAll(updDrinks)
