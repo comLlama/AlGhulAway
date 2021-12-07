@@ -10,6 +10,6 @@ data class Drink(
     @ColumnInfo(name = "abv") var abv: Double,
     @ColumnInfo(name = "amount") var amount: Int,
     //TODO: Add datetime
-    @ColumnInfo(name = "price") var price : Int?,
-    @ColumnInfo(name = "calories") var calories : Int?
+    @ColumnInfo(name = "calories") var calories : Int?,
+    @ColumnInfo(name = "price") var price : Int?
 )

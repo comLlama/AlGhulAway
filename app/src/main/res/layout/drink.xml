@@ -13,25 +13,25 @@
         android:id="@+id/tvAbv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="6.7%" />
+        tools:text="@string/unitAbv" />
 
     <TextView
         android:id="@+id/tvAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="5 dl" />
+        tools:text="@string/unitAmount" />
 
     <TextView
         android:id="@+id/tvCalories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="350 kcal" />
+        tools:text="@string/unitCalories" />
 
     <TextView
         android:id="@+id/tvPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="200 Ft" />
+        tools:text="@string/unitPrice" />
 
     <Button
         android:id="@+id/button"

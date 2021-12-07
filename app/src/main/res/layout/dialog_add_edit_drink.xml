@@ -33,10 +33,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dip"
-        android:text="Price"/>
+        android:text="Calories"/>
 
     <EditText
-        android:id="@+id/etPrice"
+        android:id="@+id/etCalories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number"/>
@@ -45,10 +45,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dip"
-        android:text="Calories"/>
+        android:text="Price"/>
 
     <EditText
-        android:id="@+id/etCalories"
+        android:id="@+id/etPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number"/>

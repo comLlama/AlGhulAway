@@ -1,7 +1,9 @@
 package hu.bme.aut.alghulaway.listadapter
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import hu.bme.aut.alghulaway.R
 import hu.bme.aut.alghulaway.databinding.DrinkBinding
 import hu.bme.aut.alghulaway.db.Drink
 
@@ -13,16 +15,25 @@ class DrinkAdapter(private val listener: DrinkClickListener) :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): DrinkAdapter.DrinkViewHolder {
-        TODO("Not yet implemented")
-    }
+    ) = DrinkViewHolder (
+        DrinkBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    )
 
     override fun onBindViewHolder(holder: DrinkViewHolder, position: Int) {
         val drink = drinks[position]
-        holder.binding.tvAbv.text = drink.abv.toString() + " %"
-        holder.binding.tvAmount.text = drink.amount.toString() + " ml"
-        holder.binding.tvCalories.text = drink.calories?.toString() ?: ""
-        holder.binding.tvPrice.text = drink.price?.toString() ?: ""
+        holder.binding.tvAbv.text = drink.abv.toString() + holder.itemView.context.getString(R.string.unitAbv)
+        holder.binding.tvAmount.text = drink.amount.toString() + " " + holder.itemView.context.getString(R.string.unitAmount)
+        if (drink.calories != null) {
+            holder.binding.tvCalories.text = drink.calories.toString() + " " + holder.itemView.context.getString(R.string.unitCalories)
+        } else {
+            holder.binding.tvCalories.text = ""
+        }
+        holder.binding.tvPrice.text = drink.price?.toString()  ?: ""
+        if (drink.price != null) {
+            holder.binding.tvPrice.text = drink.price.toString() + " " + holder.itemView.context.getString(R.string.unitPrice)
+        } else {
+            holder.binding.tvCalories.text = ""
+        }
     }
 
     override fun getItemCount(): Int = drinks.size
