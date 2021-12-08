@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity(), DrinkAdapter.DrinkClickListener,
         }
 
         initRecyclerView()
+        thread {updateAlcoholSum()}
     }
 
     private fun initRecyclerView(){
@@ -67,6 +68,12 @@ class MainActivity : AppCompatActivity(), DrinkAdapter.DrinkClickListener,
             val insertId = database.drinkDao().insert(newDrink)
             newDrink.id = insertId
             runOnUiThread { adapter.addDrink(newDrink) }
+            updateAlcoholSum()
         }
+    }
+
+    private fun updateAlcoholSum(){ // Must be called from thread!
+        var sum = database.drinkDao().getAlcoholAmount()
+        runOnUiThread {binding.tvSumAlc.text = sum.toString() + " " + getString(R.string.unitAlcoholAmount)}
     }
 }

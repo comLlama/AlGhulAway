@@ -47,7 +47,7 @@ class AddEditDrinkDialogFragment : DialogFragment() {
 
     private fun getDrink() = Drink(
         abv = binding.etABV.text.toString().toDouble(),
-        amount = binding.etAmount.text.toString().toInt(),
+        amount = binding.etAmount.text.toString().toDouble(),
         calories = binding.etCalories.text.toString().toIntOrNull(),
         price = binding.etPrice.text.toString().toIntOrNull()
     )

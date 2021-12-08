@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class Drink(
     @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = true) var id : Long? = null,
     @ColumnInfo(name = "abv") var abv: Double,
-    @ColumnInfo(name = "amount") var amount: Int,
+    @ColumnInfo(name = "amount") var amount: Double,
     //TODO: Add datetime
     @ColumnInfo(name = "calories") var calories : Int?,
     @ColumnInfo(name = "price") var price : Int?
