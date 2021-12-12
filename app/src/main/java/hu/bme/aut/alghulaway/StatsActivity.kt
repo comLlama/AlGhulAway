@@ -14,9 +14,9 @@ class StatsActivity : AppCompatActivity() {
         binding = ActivityStatsBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        thread {
+        /*thread {
             val alcoholAmount = DrinkDatabase.getDatabase(applicationContext).drinkDao().getAlcoholAmount().toString()
             runOnUiThread{ binding.textView.text =  alcoholAmount + " " + getString(R.string.unitAlcoholAmount) }
-        }.start()
+        }.start()*/
     }
 }
