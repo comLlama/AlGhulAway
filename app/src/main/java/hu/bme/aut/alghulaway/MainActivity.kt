@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity(), DrinkAdapter.DrinkClickListener,
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        setSupportActionBar(binding.toolbar)
 
         database = DrinkDatabase.getDatabase(applicationContext)
 
