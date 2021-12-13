@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AlGhulAway">
         <activity
+            android:name=".ArchiveActivity"
+            android:exported="false" />
+        <activity
             android:name=".StatsActivity"
             android:exported="false" />
         <activity

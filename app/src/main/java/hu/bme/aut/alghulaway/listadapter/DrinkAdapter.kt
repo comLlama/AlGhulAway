@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import hu.bme.aut.alghulaway.R
 import hu.bme.aut.alghulaway.databinding.DrinkBinding
-import hu.bme.aut.alghulaway.db.Drink
+import hu.bme.aut.alghulaway.db.drink.Drink
 
 class DrinkAdapter(private val listener: DrinkClickListener) :
     RecyclerView.Adapter<DrinkAdapter.DrinkViewHolder>() {

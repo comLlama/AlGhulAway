@@ -1,4 +1,4 @@
-package hu.bme.aut.alghulaway.db
+package hu.bme.aut.alghulaway.db.drink
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

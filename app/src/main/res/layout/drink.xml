@@ -7,7 +7,9 @@
     android:paddingBottom="10dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    android:paddingTop="10dp">
+    android:paddingTop="10dp"
+    android:theme="@style/Theme.ListItemCard"
+    android:background="?attr/colorSecondary">
 
     <TextView
         android:id="@+id/tvAbv"

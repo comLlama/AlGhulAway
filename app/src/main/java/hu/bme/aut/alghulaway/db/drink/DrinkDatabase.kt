@@ -1,6 +1,5 @@
-package hu.bme.aut.alghulaway.db
+package hu.bme.aut.alghulaway.db.drink
 
-import android.app.Application
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room

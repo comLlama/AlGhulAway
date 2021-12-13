@@ -3,14 +3,12 @@ package hu.bme.aut.alghulaway
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import hu.bme.aut.alghulaway.databinding.ActivityMainBinding
-import hu.bme.aut.alghulaway.db.Drink
-import hu.bme.aut.alghulaway.db.DrinkDatabase
+import hu.bme.aut.alghulaway.db.drink.Drink
+import hu.bme.aut.alghulaway.db.drink.DrinkDatabase
 import hu.bme.aut.alghulaway.fragments.AddEditDrinkDialogFragment
 import hu.bme.aut.alghulaway.listadapter.DrinkAdapter
 import kotlin.concurrent.thread
@@ -49,6 +47,10 @@ class MainActivity : AppCompatActivity(), DrinkAdapter.DrinkClickListener,
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId){
+            R.id.action_archive -> {
+                startActivity(Intent(this, ArchiveActivity::class.java))
+                true
+            }
             R.id.action_stats -> {
                 startActivity(Intent(this, StatsActivity::class.java))
                 true

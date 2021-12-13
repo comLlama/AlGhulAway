@@ -5,4 +5,6 @@
     <string name="unitCalories">kcal</string>
     <string name="unitPrice">Ft</string>
     <string name="unitAlcoholAmount">ml</string>
+    <string name="DrinkingAllowed">You are allowed to drink for now.</string>
+    <string name="total_alcohol_consumption">Total Alcohol Consumption:</string>
 </resources>

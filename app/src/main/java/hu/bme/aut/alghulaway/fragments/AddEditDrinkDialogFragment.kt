@@ -3,14 +3,11 @@ package hu.bme.aut.alghulaway.fragments
 import androidx.appcompat.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
-import android.opengl.ETC1.isValid
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.fragment.app.DialogFragment
-import hu.bme.aut.alghulaway.R
 import hu.bme.aut.alghulaway.databinding.DialogAddEditDrinkBinding
-import hu.bme.aut.alghulaway.databinding.DrinkBinding
-import hu.bme.aut.alghulaway.db.Drink
+import hu.bme.aut.alghulaway.db.drink.Drink
 import java.lang.RuntimeException
 
 class AddEditDrinkDialogFragment : DialogFragment() {
@@ -31,9 +28,9 @@ class AddEditDrinkDialogFragment : DialogFragment() {
         binding = DialogAddEditDrinkBinding.inflate(LayoutInflater.from(context))
 
         return AlertDialog.Builder(requireContext())
-            .setTitle("Title")
+            .setTitle("New drink")
             .setView(binding.root)
-            .setPositiveButton("OK"){
+            .setPositiveButton("Add"){
                 dialogInterface, i->
                 if (isValid()) {
                     listener.onDrinkModified(getDrink())
