@@ -51,6 +51,6 @@ class AddEditDrinkDialogFragment : DialogFragment() {
     )
 
     companion object{
-        const val TAG = "AddEditDrinkDialogFragment"
+        const val TAG = "AddDrinkDialogFragment"
     }
 }
