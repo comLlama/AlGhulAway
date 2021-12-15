@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.fragment.app.DialogFragment
+import hu.bme.aut.alghulaway.R
 import hu.bme.aut.alghulaway.databinding.DialogAddEditDrinkBinding
 import hu.bme.aut.alghulaway.db.drink.Drink
 import java.lang.RuntimeException
@@ -28,15 +29,15 @@ class AddEditDrinkDialogFragment : DialogFragment() {
         binding = DialogAddEditDrinkBinding.inflate(LayoutInflater.from(context))
 
         return AlertDialog.Builder(requireContext())
-            .setTitle("New drink")
+            .setTitle(getString(R.string.dialogAddDrinkTitle))
             .setView(binding.root)
-            .setPositiveButton("Add"){
+            .setPositiveButton(getString(R.string.dialogPositiveButton)){
                 dialogInterface, i->
                 if (isValid()) {
                     listener.onDrinkModified(getDrink())
                 }
             }
-            .setNegativeButton("Cancel", null)
+            .setNegativeButton(getString(R.string.dialogNegativeButton), null)
             .create()
     }
 

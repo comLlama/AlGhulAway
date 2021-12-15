@@ -1,3 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <integer name="alcMidThreshold">10</integer>
+    <integer name="alcHighTreshold">30</integer>
+    <integer name="timerMins">60</integer>
+    <integer name="itemPerRow">3</integer>
 </resources>

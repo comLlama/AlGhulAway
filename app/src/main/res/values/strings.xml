@@ -14,4 +14,7 @@
     <string name="abv">ABV</string>
     <string name="calories">Calories</string>
     <string name="price">Price</string>
+    <string name="dialogPositiveButton">Ok</string>
+    <string name="dialogNegativeButton">Cancel</string>
+    <string name="dialogAddDrinkTitle">New drink</string>
 </resources>

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/actiom_removeAll"
+    <item android:id="@+id/action_removeAll"
         android:title="@string/action_removeAll" />
+    <item android:id="@+id/action_archiveCurrentList"
+        android:title="Archive Current List" />
     <item android:id="@+id/action_archive"
-        android:title="Archive"/>
+        android:title="Previous Lists"/>
     <item android:id="@+id/action_stats"
         android:title="Statistics"/>
     <item android:id="@+id/action_settings"

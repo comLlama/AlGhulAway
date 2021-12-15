@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.GridLayoutManager
 import hu.bme.aut.alghulaway.databinding.ActivityMainBinding
 import hu.bme.aut.alghulaway.db.drink.Drink
@@ -47,12 +48,20 @@ class MainActivity : AppCompatActivity(), DrinkAdapter.DrinkClickListener,
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId){
-            R.id.actiom_removeAll -> {
-                adapter.removeAll()
-                thread {
-                    database.drinkDao().deleteAll()
-                    updateAlcoholSum()
-                }
+            R.id.action_removeAll -> {
+                AlertDialog.Builder(this)
+                    .setMessage("Do you want to remove all drinks on current list?")
+                    .setPositiveButton(getString(R.string.dialogPositiveButton)) {_, _ -> removeAllFromList()}
+                    .setNegativeButton(getString(R.string.dialogNegativeButton), null)
+                    .show()
+                true
+            }
+            R.id.action_archiveCurrentList -> {
+                AlertDialog.Builder(this)
+                    .setMessage("Do you want to archive current list?")
+                    .setPositiveButton(getString(R.string.dialogPositiveButton)) { _, _ -> null}
+                    .setNegativeButton(getString(R.string.dialogNegativeButton), null)
+                    .show()
                 true
             }
             R.id.action_archive -> {
@@ -63,13 +72,17 @@ class MainActivity : AppCompatActivity(), DrinkAdapter.DrinkClickListener,
                 startActivity(Intent(this, StatsActivity::class.java))
                 true
             }
+            R.id.action_settings -> {
+                startActivity(Intent(this, SettingsActivity::class.java))
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
     private fun initRecyclerView(){
         adapter = DrinkAdapter(this)
-        binding.rvMain.layoutManager = GridLayoutManager(this, 3)
+        binding.rvMain.layoutManager = GridLayoutManager(this, resources.getInteger(R.integer.itemPerRow))
         binding.rvMain.adapter = adapter
         loadItemsInBackground()
     }
@@ -102,5 +115,13 @@ class MainActivity : AppCompatActivity(), DrinkAdapter.DrinkClickListener,
     private fun updateAlcoholSum(){ // Must be called from thread!
         var sum = database.drinkDao().getAlcoholAmount()
         runOnUiThread {binding.tvSumAlc.text = sum.toString() + " " + getString(R.string.unitAlcoholAmount)}
+    }
+
+    private fun removeAllFromList(){
+        adapter.removeAll()
+        thread {
+            database.drinkDao().deleteAll()
+            updateAlcoholSum()
+        }
     }
 }

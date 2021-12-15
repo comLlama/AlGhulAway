@@ -41,9 +41,11 @@ class DrinkAdapter(private val listener: DrinkClickListener) :
         }
 
         val alc = drink.abv * drink.amount
-        if (alc < 10) {
+        val miThreshold = holder.itemView.context.resources.getInteger(R.integer.alcMidThreshold)
+        val hiThreshold = holder.itemView.context.resources.getInteger(R.integer.alcHighTreshold)
+        if (alc < miThreshold) {
             holder.binding.root.context.setTheme(R.style.Theme_ListItemCardLowAlc)
-        } else if (alc < 30) {
+        } else if (alc < hiThreshold) {
             holder.binding.root.context.setTheme(R.style.Theme_ListItemCardMedAlc)
         } else {
             holder.binding.root.context.setTheme(R.style.Theme_ListItemCardHighAlc)
