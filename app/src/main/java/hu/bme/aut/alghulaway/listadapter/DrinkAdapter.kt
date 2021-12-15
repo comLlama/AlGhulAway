@@ -5,14 +5,19 @@ import android.graphics.drawable.Drawable
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.annotation.ColorInt
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import hu.bme.aut.alghulaway.R
 import hu.bme.aut.alghulaway.databinding.DrinkBinding
 import hu.bme.aut.alghulaway.db.drink.Drink
+import hu.bme.aut.alghulaway.fragments.AddDrinkDialogFragment
+import hu.bme.aut.alghulaway.fragments.EditDrinkDialogFragment
 import java.util.*
 
-class DrinkAdapter(private val listener: DrinkClickListener) :
+class DrinkAdapter(private val listener: DrinkClickListener, val activity: AppCompatActivity) :
     RecyclerView.Adapter<DrinkAdapter.DrinkViewHolder>() {
 
     private val drinks = mutableListOf<Drink>()
@@ -38,6 +43,13 @@ class DrinkAdapter(private val listener: DrinkClickListener) :
             holder.binding.tvPrice.text = drink.price.toString() + " " + holder.itemView.context.getString(R.string.unitPrice)
         } else {
             holder.binding.tvCalories.text = ""
+        }
+
+        holder.binding.button.setOnClickListener{
+            EditDrinkDialogFragment(drink).show(
+                activity.supportFragmentManager,
+                EditDrinkDialogFragment.TAG
+            )
         }
 
         val alc = drink.abv * drink.amount
@@ -74,6 +86,14 @@ class DrinkAdapter(private val listener: DrinkClickListener) :
         var idx = drinks.indexOf(drink)
         drinks.remove(drink)
         notifyItemRemoved(idx)
+    }
+
+    fun editDrink(drink: Drink) {
+        var olddrink = drinks.find { x -> x.id?.equals(drink.id)!! }
+        var idx = drinks.indexOf(olddrink)
+        drinks[idx] = drink
+        notifyItemChanged(idx)
+        //notifyDataSetChanged()
     }
 
     fun removeAll() {

@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "archive")
 data class ArchivedList(
     @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = true) var id : Long? = null,
-    @ColumnInfo(name ="archivalDate") var archivalDate : java.util.Date,
+    // @ColumnInfo(name ="archivalDate") var archivalDate : java.sql.Date,
     @ColumnInfo(name = "alcSum") var alcSum : Double,
     @ColumnInfo(name = "drinkAmountSum") var drinkAmountSum : Double,
     @ColumnInfo(name = "drinkCount") var drinkCount: Int,

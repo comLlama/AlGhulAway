@@ -6,20 +6,28 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.GridLayoutManager
 import hu.bme.aut.alghulaway.databinding.ActivityMainBinding
+import hu.bme.aut.alghulaway.db.archive.ArchivedList
+import hu.bme.aut.alghulaway.db.archive.ArchivedListDatabase
 import hu.bme.aut.alghulaway.db.drink.Drink
 import hu.bme.aut.alghulaway.db.drink.DrinkDatabase
-import hu.bme.aut.alghulaway.fragments.AddEditDrinkDialogFragment
+import hu.bme.aut.alghulaway.fragments.AddDrinkDialogFragment
+import hu.bme.aut.alghulaway.fragments.EditDrinkDialogFragment
 import hu.bme.aut.alghulaway.listadapter.DrinkAdapter
+import java.sql.Date
+import java.util.*
 import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity(), DrinkAdapter.DrinkClickListener,
-                        AddEditDrinkDialogFragment.AddEditDrinkDialogListener {
+                        AddDrinkDialogFragment.AddDrinkDialogListener,
+                        EditDrinkDialogFragment.EditDrinkDialogListener{
 
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var database: DrinkDatabase
+    private lateinit var archive: ArchivedListDatabase
     private lateinit var adapter: DrinkAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,9 +39,9 @@ class MainActivity : AppCompatActivity(), DrinkAdapter.DrinkClickListener,
         database = DrinkDatabase.getDatabase(applicationContext)
 
         binding.fab.setOnClickListener{
-            AddEditDrinkDialogFragment().show(
+            AddDrinkDialogFragment().show(
                 supportFragmentManager,
-                AddEditDrinkDialogFragment.TAG
+                AddDrinkDialogFragment.TAG
             )
         }
 
@@ -59,7 +67,7 @@ class MainActivity : AppCompatActivity(), DrinkAdapter.DrinkClickListener,
             R.id.action_archiveCurrentList -> {
                 AlertDialog.Builder(this)
                     .setMessage("Do you want to archive current list?")
-                    .setPositiveButton(getString(R.string.dialogPositiveButton)) { _, _ -> null}
+                    .setPositiveButton(getString(R.string.dialogPositiveButton)) { _, _ -> archiveCurrentList() }
                     .setNegativeButton(getString(R.string.dialogNegativeButton), null)
                     .show()
                 true
@@ -81,7 +89,7 @@ class MainActivity : AppCompatActivity(), DrinkAdapter.DrinkClickListener,
     }
 
     private fun initRecyclerView(){
-        adapter = DrinkAdapter(this)
+        adapter = DrinkAdapter(this, this)
         binding.rvMain.layoutManager = GridLayoutManager(this, resources.getInteger(R.integer.itemPerRow))
         binding.rvMain.adapter = adapter
         loadItemsInBackground()
@@ -103,7 +111,7 @@ class MainActivity : AppCompatActivity(), DrinkAdapter.DrinkClickListener,
         }
     }
 
-    override fun onDrinkModified(newDrink: Drink) {
+    override fun onDrinkAdded(newDrink: Drink) {
         thread {
             val insertId = database.drinkDao().insert(newDrink)
             newDrink.id = insertId
@@ -122,6 +130,39 @@ class MainActivity : AppCompatActivity(), DrinkAdapter.DrinkClickListener,
         thread {
             database.drinkDao().deleteAll()
             updateAlcoholSum()
+        }
+    }
+
+    override fun onDrinkRemoved(drink : Drink) {
+        adapter.removeDrink(drink)
+        thread{
+            database.drinkDao().delete(drink)
+            updateAlcoholSum()
+        }
+    }
+
+    override fun onDrinkEdited(drink: Drink) {
+        adapter.editDrink(drink)
+        thread {
+            database.drinkDao().update(drink)
+            updateAlcoholSum()
+        }
+    }
+    private fun archiveCurrentList(){
+        thread{
+            archive.listDao().insert(
+                ArchivedList(
+                    alcSum = database.drinkDao()?.getAlcoholAmount(),
+                    drinkAmountSum = database.drinkDao().getDrinkAmount(),
+                    drinkCount = database.drinkDao().getDrinkCount(),
+                    maxAlcAmountInDrink = database.drinkDao().getMaxAlcAmount(),
+                    nonAlcCount = database.drinkDao().getNonAlcCount(),
+                    nonAlcAmount = database.drinkDao().getNonAlcAmount(),
+                    calorieSum = database.drinkDao().getCalorieSum(),
+                    priceSum = database.drinkDao().getPriceSum(),
+                    freeDrinkCount = database.drinkDao().getFreeDrinkCount()
+                )
+            )
         }
     }
 }

@@ -7,26 +7,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.fragment.app.DialogFragment
 import hu.bme.aut.alghulaway.R
-import hu.bme.aut.alghulaway.databinding.DialogAddEditDrinkBinding
+import hu.bme.aut.alghulaway.databinding.DialogAddDrinkBinding
 import hu.bme.aut.alghulaway.db.drink.Drink
 import java.lang.RuntimeException
 
-class AddEditDrinkDialogFragment : DialogFragment() {
-    interface AddEditDrinkDialogListener{
-        fun onDrinkModified(newDrink: Drink)
+class AddDrinkDialogFragment : DialogFragment() {
+    interface AddDrinkDialogListener{
+        fun onDrinkAdded(newDrink: Drink)
     }
 
-    private lateinit var listener: AddEditDrinkDialogListener
-    private lateinit var binding: DialogAddEditDrinkBinding
+    private lateinit var listener: AddDrinkDialogListener
+    private lateinit var binding: DialogAddDrinkBinding
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        listener = context as? AddEditDrinkDialogListener
-            ?: throw RuntimeException("AddEditDrinkDialogListener unimplemented in Activity")
+        listener = context as? AddDrinkDialogListener
+            ?: throw RuntimeException("AddDrinkDialogListener unimplemented in Activity")
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        binding = DialogAddEditDrinkBinding.inflate(LayoutInflater.from(context))
+        binding = DialogAddDrinkBinding.inflate(LayoutInflater.from(context))
 
         return AlertDialog.Builder(requireContext())
             .setTitle(getString(R.string.dialogAddDrinkTitle))
@@ -34,7 +34,7 @@ class AddEditDrinkDialogFragment : DialogFragment() {
             .setPositiveButton(getString(R.string.dialogPositiveButton)){
                 dialogInterface, i->
                 if (isValid()) {
-                    listener.onDrinkModified(getDrink())
+                    listener.onDrinkAdded(getDrink())
                 }
             }
             .setNegativeButton(getString(R.string.dialogNegativeButton), null)
