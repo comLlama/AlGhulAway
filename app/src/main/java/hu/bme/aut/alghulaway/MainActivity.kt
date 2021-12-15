@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity(), DrinkAdapter.DrinkClickListener,
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var database: DrinkDatabase
-    private lateinit var archive: ArchivedListDatabase
+    public lateinit var archive: ArchivedListDatabase
     private lateinit var adapter: DrinkAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity(), DrinkAdapter.DrinkClickListener,
         setContentView(view)
 
         database = DrinkDatabase.getDatabase(applicationContext)
+        archive = ArchivedListDatabase.getDatabase(applicationContext)
 
         binding.fab.setOnClickListener{
             AddDrinkDialogFragment().show(
@@ -150,19 +151,22 @@ class MainActivity : AppCompatActivity(), DrinkAdapter.DrinkClickListener,
     }
     private fun archiveCurrentList(){
         thread{
-            archive.listDao().insert(
-                ArchivedList(
-                    alcSum = database.drinkDao()?.getAlcoholAmount(),
-                    drinkAmountSum = database.drinkDao().getDrinkAmount(),
-                    drinkCount = database.drinkDao().getDrinkCount(),
-                    maxAlcAmountInDrink = database.drinkDao().getMaxAlcAmount(),
-                    nonAlcCount = database.drinkDao().getNonAlcCount(),
-                    nonAlcAmount = database.drinkDao().getNonAlcAmount(),
-                    calorieSum = database.drinkDao().getCalorieSum(),
-                    priceSum = database.drinkDao().getPriceSum(),
-                    freeDrinkCount = database.drinkDao().getFreeDrinkCount()
-                )
+            var newArchivedList = ArchivedList(
+                alcSum = database.drinkDao()?.getAlcoholAmount(),
+                drinkAmountSum = database.drinkDao().getDrinkAmount(),
+                drinkCount = database.drinkDao().getDrinkCount(),
+                maxAlcAmountInDrink = database.drinkDao().getMaxAlcAmount(),
+                nonAlcCount = database.drinkDao().getNonAlcCount(),
+                nonAlcAmount = database.drinkDao().getNonAlcAmount(),
+                calorieSum = database.drinkDao().getCalorieSum(),
+                priceSum = database.drinkDao().getPriceSum(),
+                freeDrinkCount = database.drinkDao().getFreeDrinkCount()
             )
+            var id = archive.listDao().insert(
+                newArchivedList
+            )
+            newArchivedList.id = id
         }
+        removeAllFromList()
     }
 }
