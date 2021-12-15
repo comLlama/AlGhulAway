@@ -47,6 +47,14 @@ class MainActivity : AppCompatActivity(), DrinkAdapter.DrinkClickListener,
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId){
+            R.id.actiom_removeAll -> {
+                adapter.removeAll()
+                thread {
+                    database.drinkDao().deleteAll()
+                    updateAlcoholSum()
+                }
+                true
+            }
             R.id.action_archive -> {
                 startActivity(Intent(this, ArchiveActivity::class.java))
                 true

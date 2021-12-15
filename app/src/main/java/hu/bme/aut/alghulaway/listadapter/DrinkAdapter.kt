@@ -1,11 +1,16 @@
 package hu.bme.aut.alghulaway.listadapter
 
+import android.content.res.Resources
+import android.graphics.drawable.Drawable
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.RecyclerView
 import hu.bme.aut.alghulaway.R
 import hu.bme.aut.alghulaway.databinding.DrinkBinding
 import hu.bme.aut.alghulaway.db.drink.Drink
+import java.util.*
 
 class DrinkAdapter(private val listener: DrinkClickListener) :
     RecyclerView.Adapter<DrinkAdapter.DrinkViewHolder>() {
@@ -34,6 +39,20 @@ class DrinkAdapter(private val listener: DrinkClickListener) :
         } else {
             holder.binding.tvCalories.text = ""
         }
+
+        val alc = drink.abv * drink.amount
+        if (alc < 10) {
+            holder.binding.root.context.setTheme(R.style.Theme_ListItemCardLowAlc)
+        } else if (alc < 30) {
+            holder.binding.root.context.setTheme(R.style.Theme_ListItemCardMedAlc)
+        } else {
+            holder.binding.root.context.setTheme(R.style.Theme_ListItemCardHighAlc)
+        }
+        var typedValue = TypedValue()
+        holder.itemView.context.theme.resolveAttribute(R.attr.backgroundColor, typedValue, true)
+        holder.binding.root.setBackgroundColor(typedValue.data)
+
+        //holder.binding.root.invalidate()
     }
 
     override fun getItemCount(): Int = drinks.size
@@ -53,6 +72,12 @@ class DrinkAdapter(private val listener: DrinkClickListener) :
         var idx = drinks.indexOf(drink)
         drinks.remove(drink)
         notifyItemRemoved(idx)
+    }
+
+    fun removeAll() {
+        var size = drinks.size
+        drinks.removeAll(drinks)
+        notifyItemRangeRemoved(0, size)
     }
 
     fun update(updDrinks: List<Drink>){

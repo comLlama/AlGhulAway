@@ -15,8 +15,13 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
-    <style name="Theme.ListItemCard" parent="Theme.AlGhulAway">
-        <item name="colorSecondary">@color/low_alcohol_light</item>
-        <item name="colorSecondaryVariant">@color/high_alcohol_light</item>
+    <style name="Theme.ListItemCardLowAlc" parent="Theme.AlGhulAway">
+        <item name="backgroundColor">@color/low_alcohol_light</item>
+    </style>
+    <style name="Theme.ListItemCardHighAlc" parent="Theme.AlGhulAway">
+        <item name="backgroundColor">@color/high_alcohol_light</item>
+    </style>
+    <style name="Theme.ListItemCardMedAlc" parent="Theme.AlGhulAway">
+        <item name="backgroundColor">@color/medium_alcohol_light</item>
     </style>
 </resources>

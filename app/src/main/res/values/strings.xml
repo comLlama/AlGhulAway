@@ -7,4 +7,11 @@
     <string name="unitAlcoholAmount">ml</string>
     <string name="DrinkingAllowed">You are allowed to drink for now.</string>
     <string name="total_alcohol_consumption">Total Alcohol Consumption:</string>
+    <string name="action_removeAll">Remove All</string>
+    <string name="amount">Amount</string>
+    <string name="unitLeftDecorator">(</string>
+    <string name="unitRightDecorator">)</string>
+    <string name="abv">ABV</string>
+    <string name="calories">Calories</string>
+    <string name="price">Price</string>
 </resources>

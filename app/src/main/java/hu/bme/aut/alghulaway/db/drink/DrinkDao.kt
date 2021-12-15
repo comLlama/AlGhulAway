@@ -13,6 +13,9 @@ interface DrinkDao {
     @Delete
     fun delete(drink: Drink)
 
+    @Query("DELETE FROM drinks")
+    fun deleteAll()
+
     @Query("SELECT * FROM drinks")
     fun getAll(): List<Drink>
 
